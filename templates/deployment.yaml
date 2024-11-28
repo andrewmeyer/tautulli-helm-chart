@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ .Release.Name }}"
+  namespace: "{{ .Release.Namespace }}"
+  labels:
+    app: "{{ .Release.Name }}"
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: "{{ .Release.Name }}"
+  template:
+    metadata:
+      labels:
+        app: "{{ .Release.Name }}"
+    spec:
+      containers:
+      - name: tautulli
+        image: "tautulli/tautulli:{{ .Values.image.tag }}"
+        ports:
+        - containerPort: 8181
+        envFrom:
+        - configMapRef:
+            name: configmap-env
+        volumeMounts:
+          - mountPath: /config
+            name: config-volume
+      volumes:
+        - name: config-volume
+          persistentVolumeClaim:
+            claimName: "{{ .Values.pvc.name }}"
+

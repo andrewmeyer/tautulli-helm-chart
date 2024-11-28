@@ -1,0 +1,20 @@
+# Defaults are added as comments
+
+replicas: 1
+
+image:
+  tag: latest
+
+pvc:
+  storageclass: longhorn
+  name: "tautulli-config-pvc"
+  size: 10Gi
+
+configmap_env:
+  data:
+    PUID: 1000
+    PGID: 1000
+    TZ: "America/Chicago"
+
+ingress:
+  hostname: "tautulli.your.domain"
