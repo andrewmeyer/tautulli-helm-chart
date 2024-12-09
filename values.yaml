@@ -3,7 +3,7 @@
 replicas: 1
 
 image:
-  tag: latest
+  tag: 2.15.0
 
 pvc:
   storageclass: longhorn
